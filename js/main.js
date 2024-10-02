@@ -1,69 +1,73 @@
- // Declaración de constantes
- const direccion = "Calle Viñas 123, Madrid";
- const telefono = "+34 600 123 456";
- const email = "info@lacepa.com";
+// Declaración de constantes
+const nombreTienda = "La Cepa";
+const direccion = "Calle Viñas 123, Madrid";
+const horarioApertura = "De lunes a viernes: 10:00 AM - 8:00 PM";
 
- // Variables
- let nombreVinoteca = "Vinoteca La Cepa";
- let horarioApertura = "De lunes a viernes: 10:00 AM - 8:00 PM";
+// Declaración de variables
+let cliente;
+let pedido = [];
+let continuarComprando = true;
 
- // Array de vinos
- const vinos = [
-     {
-         nombre: "Vino Tinto",
-         descripcion: "Un exquisito vino tinto con cuerpo y notas afrutadas.",
-         imagen: "https://via.placeholder.com/200x300"
-     },
-     {
-         nombre: "Vino Blanco",
-         descripcion: "Fresco y afrutado, perfecto para acompañar pescados y mariscos.",
-         imagen: "https://via.placeholder.com/200x300"
-     },
-     {
-         nombre: "Vino Rosado",
-         descripcion: "Delicado, suave y refrescante, ideal para tardes de verano.",
-         imagen: "https://via.placeholder.com/200x300"
-     }
- ];
+// Array de vinos disponibles
+const vinos = [
+    { nombre: "Vino Tinto", precio: 12, descripcion: "Cuerpo completo con notas de frutos rojos." },
+    { nombre: "Vino Blanco", precio: 10, descripcion: "Fresco, ideal para mariscos y pescados." },
+    { nombre: "Vino Rosado", precio: 9, descripcion: "Suave y refrescante, perfecto para el verano." },
+];
 
- // Mostrar la información en la consola
- console.log("Nombre de la vinoteca:", nombreVinoteca);
- console.log("Horario de Apertura:", horarioApertura);
- console.log("Dirección:", direccion);
- console.log("Teléfono:", telefono);
- console.log("Email:", email);
- console.log("Catálogo de vinos:", vinos);
+// Mensaje de bienvenida con Prompt para obtener el nombre del cliente
+cliente = prompt("¡Bienvenido a " + nombreTienda + "! ¿Cuál es tu nombre?");
+if (cliente) {
+    alert("Hola " + cliente + ", ¡esperamos que disfrutes de nuestra selección de vinos!");
+    console.log("Cliente: " + cliente);
+}
 
- // Prompt: Pedir el nombre del visitante y mostrarlo en la consola
- let visitante = prompt("¡Bienvenido a La Cepa! ¿Cuál es tu nombre?");
- if (visitante) {
-     console.log(`Hola, ${visitante}. ¡Esperamos que disfrutes tu experiencia!`);
-     alert(`Hola, ${visitante}, bienvenido a la Vinoteca La Cepa`);
- }
+// Confirmar si el cliente desea ver los vinos disponibles
+if (confirm("¿Te gustaría ver los vinos disponibles?")) {
+    // Iteramos sobre el array de vinos y los mostramos en la consola
+    console.log("Lista de vinos disponibles:");
+    vinos.forEach((vino, index) => {
+        console.log((index + 1) + ". " + vino.nombre + " - Precio: " + vino.precio + "€ - " + vino.descripcion);
+    });
+} else {
+    alert("¡Esperamos verte pronto, " + cliente + "!");
+    continuarComprando = false;
+}
 
- // Confirm: Preguntar si desean ver el horario de apertura
- let verHorario = confirm("¿Quieres ver el horario de apertura?");
- if (verHorario) {
-     alert(`El horario de apertura es: ${horarioApertura}`);
- }
+// Función para agregar vinos al pedido
+function agregarVinoAlPedido(vino) {
+    pedido.push(vino);
+    alert(vino.nombre + " ha sido añadido a tu pedido.");
+    console.log("Pedido actual: ", pedido);
+}
 
- // Función para mostrar detalles del vino seleccionado
- function mostrarDetalle(nombre, descripcion) {
-     document.getElementById('detalle-nombre').innerText = nombre;
-     document.getElementById('detalle-descripcion').innerText = descripcion;
-     console.log(`Mostrando detalles de: ${nombre}`);
- }
+// Función para mostrar el pedido total
+function mostrarPedido() {
+    if (pedido.length > 0) {
+        let total = 0;
+        console.log("Pedido de " + cliente + ":");
+        pedido.forEach(vino => {
+            console.log(vino.nombre + " - " + vino.precio + "$");
+            total += vino.precio;
+        });
+        console.log("Total a pagar: " + total + "$");
+        alert("Gracias por tu compra, " + cliente + "! El total es " + total + "$.");
+    } else {
+        alert("No has agregado ningún vino a tu pedido.");
+    }
+}
 
- // Función para manejar el envío del formulario
- function enviarFormulario(event) {
-     event.preventDefault(); // Evita el envío del formulario para mostrar una alerta
-     const nombre = document.getElementById('nombre').value;
-     const mensaje = document.getElementById('mensaje').value;
-     
-     alert(`Gracias por contactarnos, ${nombre}. Hemos recibido tu mensaje: "${mensaje}"`);
-     
-     // Confirmar envío del mensaje en la consola
-     console.log(`Mensaje recibido de ${nombre}: "${mensaje}"`);
-     
-     // Limpiar el formulario
-     document.getElementById('formulario-contacto').reset();   }
+// Ciclo de compra
+while (continuarComprando) {
+    let seleccion = prompt("¿Qué vino te gustaría comprar? (Escribe el número correspondiente): \n1. Vino Tinto\n2. Vino Blanco\n3. Vino Rosado\n4. Terminar pedido");
+
+    if (seleccion === "1" || seleccion === "2" || seleccion === "3") {
+        let vinoSeleccionado = vinos[parseInt(seleccion) - 1];
+        agregarVinoAlPedido(vinoSeleccionado);
+    } else if (seleccion === "4") {
+        continuarComprando = false;
+        mostrarPedido();
+    } else {
+        alert("Por favor, selecciona una opción válida.");
+    }
+}
