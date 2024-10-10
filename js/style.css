@@ -1,0 +1,173 @@
+/* General */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+h1, h2, h3 {
+    color: #8B0000;
+}
+
+p {
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+/* Estilos del encabezado y navegación */
+header {
+    background-color: #8B0000;
+    padding: 15px;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: white;
+    font-weight: bold;
+}
+
+/* Sección del catálogo */
+#catalogo {
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    background-color: #fff;
+}
+
+.producto {
+    background-color: white;
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 15px;
+    margin: 10px;
+    width: 200px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.producto img {
+    width: 100px;
+    height: auto;
+}
+
+.producto h3 {
+    margin: 10px 0;
+    font-size: 1.2em;
+}
+
+.producto p {
+    margin: 5px 0;
+}
+
+button {
+    background-color: #8B0000;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #B22222;
+}
+
+/* Sección del carrito de compras */
+#carrito {
+    padding: 20px;
+    background-color: #fff;
+    text-align: center;
+    margin: 20px 0;
+}
+
+#carrito p {
+    font-size: 1.5em;
+    color: #333;
+}
+
+#carrito button {
+    margin-top: 10px;
+    padding: 10px 20px;
+}
+
+/* Sección de contacto */
+#contacto {
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-top: 1px solid #ddd;
+}
+
+#contacto h2 {
+    margin-bottom: 20px;
+}
+
+#form-contacto {
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#form-contacto label {
+    text-align: left;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+#form-contacto input,
+#form-contacto textarea {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+}
+
+#form-contacto button {
+    margin-top: 20px;
+    background-color: #8B0000;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#form-contacto button:hover {
+    background-color: #B22222;
+}
+
+#mensaje-exito {
+    margin-top: 10px;
+    color: green;
+    display: none;
+}
+
+/* Footer */
+footer {
+    background-color: #8B0000;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 20px;
+}       

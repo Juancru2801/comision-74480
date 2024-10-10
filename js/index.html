@@ -4,9 +4,84 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script defer src="./main.js"></script>
-        <title>Document</title>
+        <title>LA CEPA</title>
+        <link rel="stylesheet" href="./style.css">
     </head>
-    <body>
-        <h1>La cepa</h1>
-    </body>
-    </html>
+    <header>
+        <h1>Tienda de Vinos</h1>
+        <nav>
+            <ul>
+                <li><a href="#catalogo">Catálogo</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#carrito">Carrito</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="catalogo">
+        <h2>Nuestros Vinos</h2>
+        <!-- Vino Tinto -->
+    <div class="producto">
+        <img src="../imagenes/vino tinto.jpg" alt="Vino Tinto">
+        <h3>Vino Tinto</h3>
+        <p>Precio: $30.000</p>
+        <button class="btn-comprar" data-precio="30.000">Añadir al carrito</button>
+    </div>
+
+    <!-- Vino Blanco -->
+    <div class="producto">
+        <img src="../imagenes/vino blanco.jpg" alt="Vino Blanco">
+        <h3>Vino Blanco</h3>
+        <p>Precio: $28.000 </p>
+        <button class="btn-comprar" data-precio="28.000">Añadir al carrito</button>
+    </div>
+
+    <!-- Vino Rosado -->
+    <div class="producto">
+        <img src="../imagenes/vino rosado.jpg" alt="Vino Rosado">
+        <h3>Vino Rosado</h3>
+        <p>Precio: $35.000 </p>
+        <button class="btn-comprar" data-precio="35.000">Añadir al carrito</button>
+    </div>
+
+    <!-- Vino Espumante -->
+    <div class="producto">
+        <img src="../imagenes/espumante.jpeg" alt="Vino Espumante">
+        <h3>Vino Espumante</h3>
+        <p>Precio: $70.000</p>
+        <button class="btn-comprar" data-precio="70.000">Añadir al carrito</button>
+    </div>
+    </section>
+
+    <section id="carrito">
+        <h2>Carrito de Compras</h2>
+        <p>Total: <span id="total">0</span>$</p>
+        <button id="comprar">Comprar</button>
+    </section>
+
+    <section id="contacto">
+        <h2>Contacto</h2>
+        <p>¿Tienes alguna pregunta o necesitas más información? Envíanos un mensaje.</p>
+        
+        <form id="form-contacto">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+    
+            <label for="email">Correo electrónico:</label>
+            <input type="email" id="email" name="email" placeholder="Tu correo" required>
+    
+            <label for="mensaje">Mensaje:</label>
+            <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribe tu mensaje" required></textarea>
+    
+            <button type="submit">Enviar</button>
+        </form>
+    
+        <p id="mensaje-exito" style="display:none; color:green;">¡Gracias por tu mensaje! Nos pondremos en contacto pronto.</p>
+    </section>
+    <footer>
+        <p>&copy; 2024 Tienda de Vinos</p>
+    </footer>
+
+    
+</body>
+</html>

@@ -1,73 +1,66 @@
-// Declaración de constantes
-const nombreTienda = "La Cepa";
-const direccion = "Calle Viñas 123, Madrid";
-const horarioApertura = "De lunes a viernes: 10:00 AM - 8:00 PM";
+document.addEventListener('DOMContentLoaded', () => {
+    // Variables y elementos del DOM
+    const botonesComprar = document.querySelectorAll('.btn-comprar');
+    const totalElemento = document.getElementById('total');
+    const botonComprar = document.getElementById('comprar');
 
-// Declaración de variables
-let cliente;
-let pedido = [];
-let continuarComprando = true;
+    // Cargar carrito desde localStorage o iniciar vacío
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || []; 
+    actualizarTotal();
 
-// Array de vinos disponibles
-const vinos = [
-    { nombre: "Vino Tinto", precio: 12, descripcion: "Cuerpo completo con notas de frutos rojos." },
-    { nombre: "Vino Blanco", precio: 10, descripcion: "Fresco, ideal para mariscos y pescados." },
-    { nombre: "Vino Rosado", precio: 9, descripcion: "Suave y refrescante, perfecto para el verano." },
-];
-
-// Mensaje de bienvenida con Prompt para obtener el nombre del cliente
-cliente = prompt("¡Bienvenido a " + nombreTienda + "! ¿Cuál es tu nombre?");
-if (cliente) {
-    alert("Hola " + cliente + ", ¡esperamos que disfrutes de nuestra selección de vinos!");
-    console.log("Cliente: " + cliente);
-}
-
-// Confirmar si el cliente desea ver los vinos disponibles
-if (confirm("¿Te gustaría ver los vinos disponibles?")) {
-    // Iteramos sobre el array de vinos y los mostramos en la consola
-    console.log("Lista de vinos disponibles:");
-    vinos.forEach((vino, index) => {
-        console.log((index + 1) + ". " + vino.nombre + " - Precio: " + vino.precio + "€ - " + vino.descripcion);
-    });
-} else {
-    alert("¡Esperamos verte pronto, " + cliente + "!");
-    continuarComprando = false;
-}
-
-// Función para agregar vinos al pedido
-function agregarVinoAlPedido(vino) {
-    pedido.push(vino);
-    alert(vino.nombre + " ha sido añadido a tu pedido.");
-    console.log("Pedido actual: ", pedido);
-}
-
-// Función para mostrar el pedido total
-function mostrarPedido() {
-    if (pedido.length > 0) {
-        let total = 0;
-        console.log("Pedido de " + cliente + ":");
-        pedido.forEach(vino => {
-            console.log(vino.nombre + " - " + vino.precio + "$");
-            total += vino.precio;
+    // Evento para añadir productos al carrito
+    botonesComprar.forEach(boton => {
+        boton.addEventListener('click', (e) => {
+            const producto = obtenerDatosProducto(e.target);
+            agregarProductoAlCarrito(producto);
+            guardarCarritoEnLocalStorage();
+            actualizarTotal();
         });
-        console.log("Total a pagar: " + total + "$");
-        alert("Gracias por tu compra, " + cliente + "! El total es " + total + "$.");
-    } else {
-        alert("No has agregado ningún vino a tu pedido.");
-    }
-}
+    });
 
-// Ciclo de compra
-while (continuarComprando) {
-    let seleccion = prompt("¿Qué vino te gustaría comprar? (Escribe el número correspondiente): \n1. Vino Tinto\n2. Vino Blanco\n3. Vino Rosado\n4. Terminar pedido");
+    // Evento para finalizar la compra
+    botonComprar.addEventListener('click', () => {
+        if (carrito.length > 0) {
+            alert(`Gracias por tu compra. El total es de ${formatearMoneda(calcularTotal())}`);
+            carrito = []; // Vaciar el carrito
+            guardarCarritoEnLocalStorage(); // Actualizar el localStorage
+            actualizarTotal(); // Refrescar la interfaz
+        } else {
+            alert('Tu carrito está vacío');
+        }
+    });
 
-    if (seleccion === "1" || seleccion === "2" || seleccion === "3") {
-        let vinoSeleccionado = vinos[parseInt(seleccion) - 1];
-        agregarVinoAlPedido(vinoSeleccionado);
-    } else if (seleccion === "4") {
-        continuarComprando = false;
-        mostrarPedido();
-    } else {
-        alert("Por favor, selecciona una opción válida.");
+    // Función para obtener los datos de un producto desde el botón
+    function obtenerDatosProducto(boton) {
+        const productoDiv = boton.parentElement;
+        const nombre = productoDiv.querySelector('h3').textContent;
+        const precio = parseFloat(boton.getAttribute('data-precio'));
+        return { nombre, precio };
     }
-}
+
+    // Función para agregar un producto al carrito
+    function agregarProductoAlCarrito(producto) {
+        carrito.push(producto);
+    }
+
+    // Función para guardar el carrito en el localStorage
+    function guardarCarritoEnLocalStorage() {
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+    }
+
+    // Función para calcular el total de los productos en el carrito
+    function calcularTotal() {
+        return carrito.reduce((total, producto) => total + producto.precio, 0);
+    }
+
+    // Función para actualizar el total mostrado en la interfaz
+    function actualizarTotal() {
+        const total = calcularTotal();
+        totalElemento.textContent = formatearMoneda(total);
+    }
+
+    // Función para formatear el total con símbolo de pesos y puntos para miles
+    function formatearMoneda(valor) {
+        return `$${valor.toLocaleString('es-CO')}`;
+    }
+});
