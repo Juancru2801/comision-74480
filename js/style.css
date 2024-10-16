@@ -19,6 +19,20 @@ a {
     color: white;
 }
 
+button {
+    background-color: #8B0000;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #B22222;
+}
+
 /* Estilos del encabezado y navegación */
 header {
     background-color: #8B0000;
@@ -64,6 +78,8 @@ nav ul li a {
 .producto img {
     width: 100px;
     height: auto;
+    display: block;
+    margin: 0 auto; /* Centra la imagen */
 }
 
 .producto h3 {
@@ -73,20 +89,6 @@ nav ul li a {
 
 .producto p {
     margin: 5px 0;
-}
-
-button {
-    background-color: #8B0000;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #B22222;
 }
 
 /* Sección del carrito de compras */
@@ -170,4 +172,4 @@ footer {
     bottom: 0;
     width: 100%;
     margin-top: 20px;
-}       
+}

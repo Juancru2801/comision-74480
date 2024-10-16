@@ -1,66 +1,64 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Variables y elementos del DOM
-    const botonesComprar = document.querySelectorAll('.btn-comprar');
-    const totalElemento = document.getElementById('total');
-    const botonComprar = document.getElementById('comprar');
+// Matriz de productos
+const productos = [
+    { id: 1, nombre: 'Vino Tinto', precio: 30000, imagen: '../imagenes/vino tinto.jpg' },
+    { id: 2, nombre: 'Vino Blanco', precio: 28000, imagen: '../imagenes/vino blanco.jpg' },
+    { id: 3, nombre: 'Vino Rosado', precio: 35000, imagen: '../imagenes/vino rosado.jpg' },
+    { id: 4, nombre: 'Vino Espumante', precio: 70000, imagen: '../imagenes/espumante.jpeg' }
+];
 
-    // Cargar carrito desde localStorage o iniciar vacío
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || []; 
-    actualizarTotal();
+// Selección de contenedores del DOM
+const productosContainer = document.getElementById('productos-container');
+const listaCarrito = document.getElementById('lista-carrito');
+const totalPrecioElement = document.getElementById('total');
 
-    // Evento para añadir productos al carrito
-    botonesComprar.forEach(boton => {
-        boton.addEventListener('click', (e) => {
-            const producto = obtenerDatosProducto(e.target);
-            agregarProductoAlCarrito(producto);
-            guardarCarritoEnLocalStorage();
-            actualizarTotal();
-        });
+// Carrito vacío
+let carrito = [];
+
+// Función para renderizar los productos
+function renderProductos() {
+    productos.forEach(producto => {
+        const div = document.createElement('div');
+        div.classList.add('producto');
+        div.innerHTML = `
+            <img src="${producto.imagen}" alt="${producto.nombre}">
+            <h3>${producto.nombre}</h3>
+            <p>Precio: $${producto.precio}</p>
+            <button class="btn-comprar" onclick="agregarAlCarrito(${producto.id})">Añadir al carrito</button>
+        `;
+        productosContainer.appendChild(div);
+    });
+}
+
+// Función para agregar productos al carrito
+function agregarAlCarrito(id) {
+    const producto = productos.find(p => p.id === id);
+    carrito.push(producto);
+    renderCarrito();
+}
+
+// Función para renderizar el carrito
+function renderCarrito() {
+    listaCarrito.innerHTML = ''; // Limpiar el contenido del carrito
+    let total = 0;
+
+    carrito.forEach((producto, index) => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+            <p>${producto.nombre} - $${producto.precio} 
+            <button onclick="eliminarDelCarrito(${index})">Eliminar</button></p>
+        `;
+        listaCarrito.appendChild(div);
+        total += producto.precio;
     });
 
-    // Evento para finalizar la compra
-    botonComprar.addEventListener('click', () => {
-        if (carrito.length > 0) {
-            alert(`Gracias por tu compra. El total es de ${formatearMoneda(calcularTotal())}`);
-            carrito = []; // Vaciar el carrito
-            guardarCarritoEnLocalStorage(); // Actualizar el localStorage
-            actualizarTotal(); // Refrescar la interfaz
-        } else {
-            alert('Tu carrito está vacío');
-        }
-    });
+    totalPrecioElement.textContent = total;
+}
 
-    // Función para obtener los datos de un producto desde el botón
-    function obtenerDatosProducto(boton) {
-        const productoDiv = boton.parentElement;
-        const nombre = productoDiv.querySelector('h3').textContent;
-        const precio = parseFloat(boton.getAttribute('data-precio'));
-        return { nombre, precio };
-    }
+// Función para eliminar productos del carrito
+function eliminarDelCarrito(indice) {
+    carrito.splice(indice, 1);
+    renderCarrito();
+}
 
-    // Función para agregar un producto al carrito
-    function agregarProductoAlCarrito(producto) {
-        carrito.push(producto);
-    }
-
-    // Función para guardar el carrito en el localStorage
-    function guardarCarritoEnLocalStorage() {
-        localStorage.setItem('carrito', JSON.stringify(carrito));
-    }
-
-    // Función para calcular el total de los productos en el carrito
-    function calcularTotal() {
-        return carrito.reduce((total, producto) => total + producto.precio, 0);
-    }
-
-    // Función para actualizar el total mostrado en la interfaz
-    function actualizarTotal() {
-        const total = calcularTotal();
-        totalElemento.textContent = formatearMoneda(total);
-    }
-
-    // Función para formatear el total con símbolo de pesos y puntos para miles
-    function formatearMoneda(valor) {
-        return `$${valor.toLocaleString('es-CO')}`;
-    }
-});
+// Inicializar la tienda
+renderProductos();
