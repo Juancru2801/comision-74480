@@ -1,0 +1,6 @@
+[
+    { "id": 1, "nombre": "Vino Tinto", "precio": 30000, "imagen": "../imagenes/vino_tinto.jpg" },
+    { "id": 2, "nombre": "Vino Blanco", "precio": 28000, "imagen": "../imagenes/vino_blanco.jpg" },
+    { "id": 3, "nombre": "Vino Rosado", "precio": 35000, "imagen": "../imagenes/vino_rosado.jpg" },
+    { "id": 4, "nombre": "Vino Espumante", "precio": 70000, "imagen": "../imagenes/espumante.jpeg" }
+]

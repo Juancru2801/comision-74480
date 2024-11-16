@@ -1,17 +1,21 @@
-// productos.js
+let productos = [];
 
-// Matriz de productos
-const productos = [
-    { id: 1, nombre: 'Vino Tinto', precio: 30000, imagen: '../imagenes/vino tinto.jpg' },
-    { id: 2, nombre: 'Vino Blanco', precio: 28000, imagen: '../imagenes/vino blanco.jpg' },
-    { id: 3, nombre: 'Vino Rosado', precio: 35000, imagen: '../imagenes/vino rosado.jpg' },
-    { id: 4, nombre: 'Vino Espumante', precio: 70000, imagen: '../imagenes/espumante.jpeg' }
-];
+// Función para cargar productos desde un archivo JSON
+async function cargarProductos() {
+    try {
+        const response = await fetch('./productos.json');
+        if (!response.ok) throw new Error('No se pudo cargar el archivo JSON');
+        productos = await response.json();
+    } catch (error) {
+        console.error("Error al cargar los productos:", error);
+    }
+}
 
-// Función para renderizar los productos
+// Función para renderizar los productos en el DOM
 function renderProductos() {
     const productosContainer = document.getElementById('productos-container');
-    productosContainer.innerHTML = ''; // Limpiar el contenedor
+    productosContainer.innerHTML = '';
+
     try {
         productos.forEach(producto => {
             const div = document.createElement('div');
@@ -28,3 +32,4 @@ function renderProductos() {
         productosContainer.innerHTML = `<p style="color: red;">Error al cargar los productos: ${error.message}</p>`;
     }
 }
+
